@@ -3,30 +3,108 @@
 #include <time.h>
 void easter(void);
 int main(void){
-    int olil, yesang, hthit, rolil, ryesang, ms, es;
+    int olil, yesang, hthit, rolil, ryesang, ms, es, win = 0, event;
 start:
     srand((int)time(NULL)); //rand() 함수들을 위한 임의의 수 심기
     rolil = rand()%3;
-    printf("당신이 올릴 손가락의 수와 당신이 예상하는 올린 손가락의 수를 입력 하세요\n");
-    scanf("%d %d", &olil, &yesang);
-    if (olil > 11)
-        easter();
-        return 1;
-    if (olil > 2 || yesang > 2 + olil || olil > yesang){
+    ryesang =  rand()%5;
+    while(1){
+    if(ryesang > 2 + rolil || rolil > ryesang){
+        ryesang = rand()%3;
+    }else
+    {
+        break;
+    }
+    
+    }
+    if (win == 1){
+        printf("상대방의 차례입니다!\n올릴 손가락의 수를 입력하세요!\n");
+    scanf("%d", &olil);
+    if (olil > 2 ){
         puts("음 다시생각해봐요 손가락은 2개까지밖에 못 든다구요\n");
         goto start;
     }
-    printf("상대가 올린 손가락의 수:%d 내가 올린 손가락의 수: %d 내가 때려야할 횟수: ", rolil, olil);
+    if(rolil + olil == ryesang){
+        if(ryesang == 0){
+            printf("\n상대가 올린 손가락의 수:%d 내가 올린 손가락의 수: %d 내가 맞아야할 횟수: ", rolil, olil);
+            printf("5\n");
+            win = 1;
+            event = rand()%4;
+            switch (event){
+            case 0:
+            puts("\n상대:잔말말고 팔 걷어라\n");
+            break;
+            case 1:
+            puts("\n상대:ㅎㅎ\n");
+            break;
+            case 2:
+            puts("\n상대:자 이제 누가 형이지?\n");
+            break;
+            case 3:
+            puts("\n상대:몽둥이가 어디갔었지~?\n");
+            break;
+            }
+            printf("결과: 겨우 살아는 있음\n\n");
+            goto start;
+        }else{
+            printf("상대가 올린 손가락의 수:%d 내가 올린 손가락의 수: %d 상대가 예상한 수: %d", rolil, olil, ryesang);
+            printf("\n\n결과: 팔에 멍자국 +%d\n\n", ryesang);
+            win = 1;
+            goto start;
+        }
+    }else{
+    printf("상대가 올린 손가락의 수:%d 내가 올린 손가락의 수: %d 상대가 예상한 수: %d", rolil, olil, ryesang);
+    puts("\n결과:상대가 못마춰서 안 맞음");
+    win = 0;
+    goto start;
+    }
+    }else{
+        printf("\n\n당신의 차례입니다!\n당신이 올릴 손가락의 수와 당신이 예상하는 올린 손가락의 수를 입력 하세요\n");
+    scanf("%d %d", &olil, &yesang);
+    if (olil > 11){
+        easter();
+        system("pause");
+        return 1;
+    }
+    if (olil > 2 || yesang > 2 + olil || olil > yesang){
+        puts("\n음 다시생각해봐요 손가락은 2개까지밖에 못 든다구요\n");
+        goto start;
+    }
+    printf("\n상대가 올린 손가락의 수:%d 내가 올린 손가락의 수: %d 내가 때려야할 횟수: ", rolil, olil);
     if(rolil + olil == yesang){
         if(yesang == 0){
             printf("5\n");
+            event = rand()%4;
+            switch (event){
+            case 0:
+            puts("\n상대:어케 맞추셨죠?\n");
+            break;
+            case 1:
+            puts("\n상대:좀 하시네\n");
+            break;
+            case 2:
+            puts("\n상대:살살 때려주세요~\n");
+            break;
+            case 3:
+            puts("\n상대:형님 이번만 봐주세요\n");
+            break;
+            win = 0;
+            }
+            puts("결과: 이상하게 내가 더 아픔");
+            goto start;
         }else{
             printf("%d\n", yesang);
+            win = 0;
+            printf("\n\n결과: 긴장감 +%d\n", yesang);
+            goto start;
         }
-    }else
-    puts("없음ㅋ\n");
+    }else{
+    puts("없음 \n결과: 못맞춰서 못때림\n");
+    win = 1;
+    goto start;
     }
-
+    }
+    }
     void easter(void){
     puts("                                                  `.~~~.");
     puts("                               .:;;;;:          `::::;III;");
@@ -53,7 +131,7 @@ start:
     puts("   .;:;;I;IIi+`      .~...~...~::I=   :~~~~:...~;i::~~~~~~:::::I    ~.~~~~~~::;I=+:");
     puts("    ~;:;;II=i++`      ;:~~~`...;;;I=  .~~~~:...~:;:.....~~~~.~~.~~......~~~~~:;Ii+.");
     puts("     :::;;I==IIi.      ~.~~~....~:;== .:```.......``~.~~....````......~.````..~:;i");
-    puts("      :;;:::;III=:      ~:~~:~~~~~~~:::~..~~.~.~:~~~~~.```..~~~..`.~.~.``..~~~;:;=      `");
+    puts("      :;;:::;III=:      ~:~~:~~~~~~~:::~..~~.~.~:~~~~~.```..~~~..`.~.~.``..~~~;:;=      ");
     puts("       ::~::;;III=i`     ;:~~::;;::~.......~~~~::~....```~~~~~~~.``.~.`..~~~~~;ii+");
     puts("        ::::::;III=i;     ::~~~~:;::~...~.~:...~~~..~```.~~~~~~~.```:....~~~:::Io+");
     puts("         ~::::;;I;;;I:`   `;...~.~;;~~.`~~~:...~~~....```.~:~~:.```~~~...~:~~;::==");
